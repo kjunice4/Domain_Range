@@ -9,7 +9,7 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
+from kivy.garden.matplotlib import FigureCanvasKivyAgg
 import matplotlib.pyplot as plt
 
 #Opening Page
@@ -415,6 +415,7 @@ class Graph(Screen):
         y = [0]
         x = [0]
         
+        plt.style.use('dark_background')
         plt.plot(x,y)
         plt.xlabel("X Axis")
         plt.ylabel("Y Axis")
@@ -457,9 +458,11 @@ class Graph(Screen):
                 i = i + 1
                 
             plt.cla()
+            plt.style.use('dark_background')
             plt.title("f(x) = "+func.replace(" ",""))
             plt.grid(linewidth = 2)
-            plt.plot(x,y)
+            plt.plot(x,y,color = 'r')
+            plt.scatter(x,y, color = 'blue', s = 60)
             plt.xlabel("X Axis")
             plt.ylabel("Y Axis")
             
