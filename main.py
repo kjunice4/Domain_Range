@@ -42,7 +42,7 @@ Builder.load_string("""
             background_color: 0, 0 , 0 , 1
             size_hint_y: None
             height: 200
-            text: "Slope Intercept Calculator"
+            text: "Domain and Range"
             on_release:
                 app.root.current = "Menu"
                 root.manager.transition.direction = "left" 
