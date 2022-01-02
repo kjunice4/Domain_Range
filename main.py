@@ -10,7 +10,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
 import matplotlib
-import matplotlib.pyplot
+import matplotlib.pyplot as plt
 
 #Opening Page
 Builder.load_string("""
@@ -415,12 +415,12 @@ class Graph(Screen):
         y = [0]
         x = [0]
         
-        matplotlib.pyplot.style.use('dark_background')
-        matplotlib.pyplot.plot(x,y)
-        matplotlib.pyplot.xlabel("X Axis")
-        matplotlib.pyplot.ylabel("Y Axis")
+        plt.style.use('dark_background')
+        plt.plot(x,y)
+        plt.xlabel("X Axis")
+        plt.ylabel("Y Axis")
         
-        self.ids.box.add_widget(FigureCanvasKivyAgg(matplotlib.pyplot.gcf()))
+        self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
         
     def graph(self,entry):
         try:
@@ -457,16 +457,16 @@ class Graph(Screen):
                 
                 i = i + 1
                 
-            matplotlib.pyplot.cla()
-            matplotlib.pyplot.style.use('dark_background')
-            matplotlib.pyplot.title("f(x) = "+func.replace(" ",""))
-            matplotlib.pyplot.grid(linewidth = 2)
-            matplotlib.pyplot.plot(x,y,color = 'r')
-            matplotlib.pyplot.scatter(x,y, color = 'blue', s = 60)
-            matplotlib.pyplot.xlabel("X Axis")
-            matplotlib.pyplot.ylabel("Y Axis")
+            plt.cla()
+            plt.style.use('dark_background')
+            plt.title("f(x) = "+func.replace(" ",""))
+            plt.grid(linewidth = 2)
+            plt.plot(x,y,color = 'r')
+            plt.scatter(x,y, color = 'blue', s = 60)
+            plt.xlabel("X Axis")
+            plt.ylabel("Y Axis")
             
-            self.ids.box.add_widget(FigureCanvasKivyAgg(matplotlib.pyplot.gcf()))
+            self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
             
         except Exception:
             self.ids.box.add_widget(Label(text= "Invalid Input" ,font_size = 60, size_hint_y= None, height=100))
