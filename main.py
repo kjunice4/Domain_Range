@@ -1,18 +1,16 @@
-# Slope intercept form
-# y = mx + b
-# domain and range
+# domain and range of a given function
 # graph
-
+import kivy
+import kivy_garden
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
-from kivy.garden.matplotlib.backend_kivy import FigureCanvasKivy, FigureManagerKivy, RendererKivy, MPLKivyApp
 from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
-import kivy_garden
-import matplotlib.pyplot as plt
+import matplotlib
+import matplotlib.pyplot
 
 #Opening Page
 Builder.load_string("""
@@ -417,12 +415,12 @@ class Graph(Screen):
         y = [0]
         x = [0]
         
-        plt.style.use('dark_background')
-        plt.plot(x,y)
-        plt.xlabel("X Axis")
-        plt.ylabel("Y Axis")
+        matplotlib.pyplot.style.use('dark_background')
+        matplotlib.pyplot.plot(x,y)
+        matplotlib.pyplot.xlabel("X Axis")
+        matplotlib.pyplot.ylabel("Y Axis")
         
-        self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+        self.ids.box.add_widget(FigureCanvasKivyAgg(matplotlib.pyplot.gcf()))
         
     def graph(self,entry):
         try:
@@ -459,16 +457,16 @@ class Graph(Screen):
                 
                 i = i + 1
                 
-            plt.cla()
-            plt.style.use('dark_background')
-            plt.title("f(x) = "+func.replace(" ",""))
-            plt.grid(linewidth = 2)
-            plt.plot(x,y,color = 'r')
-            plt.scatter(x,y, color = 'blue', s = 60)
-            plt.xlabel("X Axis")
-            plt.ylabel("Y Axis")
+            matplotlib.pyplot.cla()
+            matplotlib.pyplot.style.use('dark_background')
+            matplotlib.pyplot.title("f(x) = "+func.replace(" ",""))
+            matplotlib.pyplot.grid(linewidth = 2)
+            matplotlib.pyplot.plot(x,y,color = 'r')
+            matplotlib.pyplot.scatter(x,y, color = 'blue', s = 60)
+            matplotlib.pyplot.xlabel("X Axis")
+            matplotlib.pyplot.ylabel("Y Axis")
             
-            self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
+            self.ids.box.add_widget(FigureCanvasKivyAgg(matplotlib.pyplot.gcf()))
             
         except Exception:
             self.ids.box.add_widget(Label(text= "Invalid Input" ,font_size = 60, size_hint_y= None, height=100))
