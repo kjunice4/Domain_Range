@@ -1,6 +1,5 @@
 # domain and range of a given function
 # graph
-
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.label import Label
@@ -29,7 +28,7 @@ Builder.load_string("""
             font_size: 60
             background_color: 0, 0 , 0 , 1
             size_hint_y: None
-            height: 200
+            height: 100
             text: "KSquared-math,LLC ©"
             on_release:
                 app.root.current = "Menu"
@@ -39,7 +38,7 @@ Builder.load_string("""
             font_size: 60
             background_color: 0, 0 , 0 , 1
             size_hint_y: None
-            height: 200
+            height: 100
             text: "Domain and Range"
             on_release:
                 app.root.current = "Menu"
@@ -229,12 +228,14 @@ Builder.load_string("""
             multiline: False
             hint_text: "f(x) ="
             text: y.text
+            font_size: 125
             
         TextInput:
             id: domain
             multiline: False
             hint_text: "Domain = 1,2,3,4,..."
             text: domain.text
+            font_size: 125
             
     BoxLayout:
         size_hint_y: .1
