@@ -6,8 +6,7 @@ from kivy.uix.label import Label
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
-from kivy.garden.matplotlib.backend_kivyagg import FigureCanvasKivyAgg
-import matplotlib.pyplot as plt
+import math
 
 #Opening Page
 Builder.load_string("""
@@ -25,24 +24,25 @@ Builder.load_string("""
                 root.manager.transition.direction = "left" 
                 
         Button:
-            font_size: 60
+            font_size: 50
             background_color: 0, 0 , 0 , 1
             size_hint_y: None
-            height: 100
-            text: "KSquared-math,LLC ©"
+            height: 200
+            text: "Tap anywhere to continue"
             on_release:
                 app.root.current = "Menu"
-                root.manager.transition.direction = "left" 
+                root.manager.transition.direction = "left"         
                 
         Button:
-            font_size: 60
+            font_size: 50
             background_color: 0, 0 , 0 , 1
             size_hint_y: None
-            height: 100
-            text: "Domain and Range"
+            height: 200
+            text: "KSquared-math,LLC © : Equation Calculator"
             on_release:
                 app.root.current = "Menu"
-                root.manager.transition.direction = "left" 
+                root.manager.transition.direction = "left"         
+                
 """)
 
 # Menu
@@ -72,7 +72,7 @@ Builder.load_string("""
                 text: "Menu"
             
             Button:
-                text: "Domain and Range"
+                text: "Equation Calculator"
                 font_size: 75
                 background_color: 0, 0 , 1 , 1
                 size_hint_y: None
@@ -83,33 +83,101 @@ Builder.load_string("""
                     root.manager.transition.direction = "left"
                     
             Button:
-                text: "Graph"
                 font_size: 75
-                background_color: 0, 0 , 1 , 1
                 size_hint_y: None
                 height: 200
-                padding: 10, 10
-                on_release:
-                    app.root.current = "Graph"
-                    root.manager.transition.direction = "left" 
-                    
-            Button:
-                font_size: 75
-                background_color: 0, 0 , 0 , 1
-                size_hint_y: None
-                height: 400
                 text: "Visit KSquared,LLC"
                 on_release:
                     import webbrowser
                     webbrowser.open('https://kevinjunice.wixsite.com/ksquaredllc')
+            
+            Button:
+                font_size: 75
+                background_color: 1, 0, 1, 1
+                size_hint_y: None
+                height: 200
+                padding: 10, 10
+                text: "What's new?"
+                on_release:
+                    app.root.current = "updates"
+                    root.manager.transition.direction = "left"
+                    
+            Label:
+                font_size: 75
+                size_hint_y: None
+                height: 200
+                padding: 10, 10
+                text: "Share KSquared-math,LLC ©"
+                    
+            Image:
+                source: 'KSquared_QR_code.png'
+                size_hint_y: None
+                height: 1000
+                width: 1000
 
 """)
 
-#Domain_and_Range 
+#Updates 
+Builder.load_string("""
+<updates>
+    id:updates
+    name:"updates"
+    
+    ScrollView:
+        name: "Scroll"
+        do_scroll_x: False
+        do_scroll_y: True
+    
+        GridLayout:
+            cols: 1
+            padding:10
+            spacing:10
+            size_hint: 1, None
+            width:200
+            height: self.minimum_height
+            
+            Label:
+                font_size: 60
+                size_hint_y: None
+                height: 200
+                padding: 10, 10
+                text: "What's new at KSquared-math?"
+            
+            Button:
+                id: steps
+                text: "Menu"   
+                font_size: 75
+                size_hint_y: None
+                background_color: 0, 0 , 1 , 1
+                height: 200
+                padding: 10, 10
+                on_release:
+                    app.root.current = "Menu"
+                    root.manager.transition.direction = "right" 
+                    
+            Label:
+                font_size: 40
+                size_hint_y: None
+                height: 200
+                padding: 10, 10
+                text: "Equation Calculator v0.1"
+                
+            Label:
+                font_size: 40
+                size_hint_y: None
+                height: 200
+                padding: 10, 10
+                text: "No new updates as of 1/26/2022"
+    
+    
+""")
+
+#Equartion Calculator 
 Builder.load_string("""
 <Domain_and_Range>
     id:Domain_and_Range
     name:"Domain_and_Range"
+    
     ScrollView:
         name: "Scroll"
         do_scroll_x: False
@@ -128,7 +196,7 @@ Builder.load_string("""
                 size_hint_y: None
                 height: 200
                 padding: 10, 10
-                text: "Domain and Range"
+                text: "Equation Calculator"
                     
             BoxLayout:
                 cols: 2
@@ -168,13 +236,13 @@ Builder.load_string("""
                 size_hint_y: None
                 height: 200
                 padding: 10, 10
-                text: "y = mx + b"       
+                text: "f(x) = ax + b"       
                                                         
             TextInput:
                 id: y
                 text: y.text
                 multiline: False
-                hint_text: "y ="
+                hint_text: "f(x) ="
                 font_size: 125
                 size_hint_y: None
                 height: 200
@@ -210,63 +278,6 @@ Builder.load_string("""
                     
 """)
 
-#Graph
-Builder.load_string("""
-<Graph>:
-    id: Graph
-    name: "Graph"
-    
-    BoxLayout:
-        id:box
-        size_hint_y: .8
-        pos_hint: {"top":1}
-        
-    BoxLayout:
-        size_hint_y: .2
-        TextInput:
-            id: y
-            multiline: False
-            hint_text: "f(x) ="
-            text: y.text
-            font_size: 125
-            
-        TextInput:
-            id: domain
-            multiline: False
-            hint_text: "Domain = 1,2,3,4,..."
-            text: domain.text
-            font_size: 125
-            
-    BoxLayout:
-        size_hint_y: .1
-        
-        Button:
-            text: "Menu"   
-            background_color: 0, 0 , 1 , 1
-            on_release:
-                app.root.current = "Menu"
-                root.manager.transition.direction = "right" 
-        
-        Button:
-            text: "Graph"
-            background_color: 0, 1 , 0 , 1
-            on_release:
-                box.clear_widgets()
-                Graph.graph(y.text + "?" + domain.text)
-                
-        Button:
-            text: "Clear"
-            background_color: 1, 0 , 0 , 1
-            on_release:
-                y.text = "x"
-                domain.text = "0"
-                box.clear_widgets()
-                Graph.graph(y.text + "?" + domain.text)
-                y.text = ""
-                domain.text = ""
-                
-""")
-
 class Domain_and_Range(Screen):
     sm = ScreenManager()
 
@@ -289,6 +300,8 @@ class Domain_and_Range(Screen):
             
     layouts = []
     def steps(self,entry):
+        print()
+        print("~~~~~~~~~~~~~~~~")
         print("entry ",entry)
         entry.replace(" ","")
         layout = GridLayout(cols=1,size_hint_y= None)
@@ -302,6 +315,7 @@ class Domain_and_Range(Screen):
             print("y:",y)
             
             self.ids.list_of_steps.add_widget(Label(text= "y = " + y.replace(" ","").replace("y=","").replace("+"," + ").replace("-"," - ") ,font_size = 60, size_hint_y= None, height=100))
+            self.ids.list_of_steps.add_widget(Label(text= "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" ,font_size = 60, size_hint_y= None, height=100))
             self.layouts.append(layout)
             
             domain = entry[amp+1:]
@@ -312,8 +326,8 @@ class Domain_and_Range(Screen):
             
             print("domain_comma",domain_comma)
             
-            if comma_count == 0 and y.count("x") == 1:
-                y = y.replace("x","*" + str(domain))
+            if comma_count == 0 and y.count("x") > 0:
+                y = y.replace("x","*" + str(domain)).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","math.csc").replace("sec","math.sec").replace("cot","math.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","math.sec").replace("math.smath.secc","math.sec")
                 print("y = ",y)
                 if y[0] == "*":
                     y = y.replace("*","")
@@ -325,7 +339,7 @@ class Domain_and_Range(Screen):
                 self.ids.list_of_steps.add_widget(Label(text= str(domain) + " | " + str(y) ,font_size = 60, size_hint_y= None, height=100))
                 self.layouts.append(layout)
                 
-            elif comma_count == 1 and y.count("x") == 1:
+            elif comma_count == 1 and y.count("x") > 0:
                 
                 empty_domain = []
                 for x in range(int(domain[:domain_comma]), int(domain[domain_comma + 1:]) + 1):
@@ -342,7 +356,7 @@ class Domain_and_Range(Screen):
                 self.layouts.append(layout)
                 
                 while i < len(empty_domain):
-                    y_input = str(y).replace("x","*" + str(empty_domain[i]))
+                    y_input = str(y).replace("x","*" + str(empty_domain[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","math.csc").replace("sec","math.sec").replace("cot","math.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","math.sec").replace("math.smath.secc","math.sec")
                     if y_input[0] == "*":
                         y_input = y_input.replace("*"," ")
                     print("y_input",y_input)
@@ -358,7 +372,7 @@ class Domain_and_Range(Screen):
                     
                 print("range_y",range_y)
                     
-            elif comma_count == 2 and y.count("x") == 1:
+            elif comma_count == 2 and y.count("x") > 0:
                 print("domain",domain)
                 
                 domain_list = str(domain).split(",")
@@ -369,7 +383,7 @@ class Domain_and_Range(Screen):
                     sequence_list.append(x)
                 print("sequence_list",sequence_list)    
                 
-                if y.count("x") == 1:
+                if y.count("x") > 0:
                     i = 0
                     range_y = []
                     print("loop start")
@@ -379,7 +393,7 @@ class Domain_and_Range(Screen):
                     self.layouts.append(layout)
                     
                     while i < len(sequence_list):
-                        y_input = str(y).replace("x","*" + str(sequence_list[i]))
+                        y_input = str(y).replace("x","*" + str(sequence_list[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","math.csc").replace("sec","math.sec").replace("cot","math.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","math.sec").replace("math.smath.secc","math.sec")
                         if y_input[0] == "*":
                             y_input = y_input.replace("*","")
                         print("y_input",y_input)
@@ -406,81 +420,21 @@ class Domain_and_Range(Screen):
         except Exception:
             self.ids.list_of_steps.add_widget(Label(text= "Invalid Input" ,font_size = 60, size_hint_y= None, height=100))
             self.layouts.append(layout)
-
-class Graph(Screen):
-    def __init__(self,**kwargs):
-        super().__init__(**kwargs)
-        
-        y = [0]
-        x = [0]
-        
-        plt.style.use('dark_background')
-        plt.plot(x,y)
-        plt.xlabel("X Axis")
-        plt.ylabel("Y Axis")
-        
-        self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-        
-    def graph(self,entry):
-        try:
-            print("~~~~~~~~~~~~~~~~~~~~~~~~~~")
-            print(entry)
-            
-            ques_index = entry.find("?")
-            print("ques_index",ques_index)
-            
-            func = entry[:ques_index].lower()
-            print("func",func)
-            
-            domain = entry[ques_index+1:]
-            print("domain",domain)
-            
-            y = []
-            x = []
-            
-            domain_list = domain.split(",")
-            print("domain_list",domain_list)
-            
-            i = 0
-            while i < len(domain_list):
-                function = str(func.replace("x","*" + domain_list[i])).replace("^","**")
-                print("function",function)
-                
-                if function[0] == "*":
-                    function = function[1:]
-                function_answered = eval(function)
-                print("function_answered",function_answered)
-                
-                x.append(float(domain_list[i]))
-                y.append(float(function_answered))
-                
-                i = i + 1
-                
-            plt.cla()
-            plt.style.use('dark_background')
-            plt.title("f(x) = "+func.replace(" ",""))
-            plt.grid(linewidth = 2)
-            plt.plot(x,y,color = 'r')
-            plt.scatter(x,y, color = 'blue', s = 60)
-            plt.xlabel("X Axis")
-            plt.ylabel("Y Axis")
-            
-            self.ids.box.add_widget(FigureCanvasKivyAgg(plt.gcf()))
-            
-        except Exception:
-            self.ids.box.add_widget(Label(text= "Invalid Input" ,font_size = 60, size_hint_y= None, height=100))
     
 class Homepage(Screen):
     pass            
 
 class Menu(Screen):
     pass 
+
+class updates(Screen):
+    pass
            
 sm = ScreenManager()
 sm.add_widget(Homepage(name="Homepage"))
 sm.add_widget(Menu(name="Menu"))
 sm.add_widget(Domain_and_Range(name="Domain_and_Range"))     
-sm.add_widget(Graph(name="Graph"))   
+sm.add_widget(updates(name="updates"))
 sm.current = "Homepage"   
 
 
