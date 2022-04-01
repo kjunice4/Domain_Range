@@ -7,7 +7,7 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 import math
 from colorama import Back, Style 
-from mpmath import *
+import mpmath as mpmath
 
 #Opening Page
 Builder.load_string("""
@@ -173,7 +173,7 @@ Builder.load_string("""
     
 """)
 
-#Equartion Calculator 
+#Domain_and_Range Calculator 
 Builder.load_string("""
 <Domain_and_Range>
     id:Domain_and_Range
@@ -284,20 +284,6 @@ class Domain_and_Range(Screen):
 
     def __init__(self, **kwargs):
         super(Domain_and_Range, self).__init__(**kwargs)
-        Window.bind(on_keyboard=self._key_handler)
-
-    def _key_handler(self, instance, key, *args):
-        if key == 27:
-            print("Its working ESC = 27 LENGTH")
-            self.set_previous_screen()
-            return True
-
-    def set_previous_screen(self):
-        print("Length is almost working")        
-        if sm.current != "Homepage":
-            print("Its working List")
-            sm.transition.direction = 'right'
-            sm.current = sm.previous()
             
     layouts = []
     def steps(self,entry):
@@ -327,7 +313,7 @@ class Domain_and_Range(Screen):
             print("domain_comma",domain_comma)
             
             if comma_count == 0 and y.count("x") > 0:
-                y = y.replace("x","*" + str(domain)).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mp.csc").replace("sec","mp.sec").replace("cot","mp.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
+                y = y.replace("x","*" + str(domain)).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mpmath.csc").replace("sec","mpmath.sec").replace("cot","mpmath.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
                 print("y = ",y)
                 if y[0] == "*":
                     y = y.replace("*","")
@@ -356,7 +342,7 @@ class Domain_and_Range(Screen):
                 self.layouts.append(layout)
                 
                 while i < len(empty_domain):
-                    y_input = str(y).replace("x","*" + str(empty_domain[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mp.csc").replace("sec","mp.sec").replace("cot","mp.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
+                    y_input = str(y).replace("x","*" + str(empty_domain[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mpmath.csc").replace("sec","mpmath.sec").replace("cot","mpmath.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
                     if y_input[0] == "*":
                         y_input = y_input.replace("*"," ")
                     print("y_input",y_input)
@@ -393,7 +379,7 @@ class Domain_and_Range(Screen):
                     self.layouts.append(layout)
                     
                     while i < len(sequence_list):
-                        y_input = str(y).replace("x","*" + str(sequence_list[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mp.csc").replace("sec","mp.sec").replace("cot","mp.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
+                        y_input = str(y).replace("x","*" + str(sequence_list[i])).replace("+*","+").replace("-*","-").replace("/*","/").replace("(*","(").replace("sqrt","math.sqrt").replace("pi","math.pi").replace("^","**").replace("sin","math.sin").replace("cos","math.cos").replace("tan","math.tan").replace("csc","mpmath.csc").replace("sec","mpmath.sec").replace("cot","mpmath.cot").replace("log","math.log").replace("e","math.e").replace("smath.ec","mp.sec").replace("math.smath.secc","mp.sec").replace("math.math","math").replace("mp.mp","mp")
                         if y_input[0] == "*":
                             y_input = y_input.replace("*","")
                         print("y_input",y_input)
@@ -440,6 +426,16 @@ sm.current = "Homepage"
 
 
 class Domain_and_Range(App):
+    def __init__(self, **kwargs):
+        super(Domain_and_Range, self).__init__(**kwargs)
+        Window.bind(on_keyboard=self._key_handler)
+    
+    def _key_handler(self, instance, key, *args):
+        print("key:",key)
+        if key == 27:
+            sm.current = sm.current
+            return True
+    
     def build(app):
         return sm
 
